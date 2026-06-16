@@ -67,7 +67,7 @@
     </div>
   </div>
 
-  <label class="opt"><input type="checkbox" id="lrframe"> Aggiungi cornice <span class="pl">+ € 250</span></label>
+  <label class="opt"><input type="checkbox" id="lrframe"> Aggiungi cornice <span class="pl" id="lrframepl">+ € 100</span></label>
 
   <div class="result">
     <div class="eur" id="lreur">€ 750</div>
@@ -80,19 +80,22 @@
 
 <script>
 (function(){
-  var PER_M2 = 750, FRAME_EUR = 250;
+  var PER_M2 = 750;
   function round10(x){ return Math.round(x/10)*10; }
   function fmt(n){ return n.toLocaleString('it-IT'); }
+  function frameCost(mx){ if(mx<=50) return 50; if(mx<=100) return 100; if(mx<=150) return 250; return 500; }
   function calc(){
     var w = parseFloat(document.getElementById('lrw').value)||0;
     var h = parseFloat(document.getElementById('lrh').value)||0;
     var m2 = (w*h)/10000;
+    var fc = frameCost(Math.max(w,h));
     var frame = document.getElementById('lrframe').checked;
-    var total = round10(m2 * PER_M2 + (frame ? FRAME_EUR : 0));
+    document.getElementById('lrframepl').textContent = '+ € ' + fc;
+    var total = round10(m2 * PER_M2 + (frame ? fc : 0));
     document.getElementById('lreur').textContent = '€ ' + fmt(total);
     document.getElementById('lrbreak').innerHTML =
       'Misura <b>' + (w/100).toFixed(2).replace('.00','').replace('.',',') + ' × ' + (h/100).toFixed(2).replace('.00','').replace('.',',') + ' m</b> &nbsp;·&nbsp; <b>' + m2.toFixed(2).replace('.',',') + ' m²</b> &nbsp;·&nbsp; € ' + PER_M2 + '/m²' +
-      (frame ? ' &nbsp;·&nbsp; Cornice <b>€ 250</b>' : '');
+      (frame ? ' &nbsp;·&nbsp; Cornice <b>€ ' + fc + '</b>' : '');
   }
   function clearStd(){ document.querySelectorAll('#lrstd button').forEach(function(b){ b.classList.remove('on'); }); }
   document.querySelectorAll('#lrstd button').forEach(function(b){
