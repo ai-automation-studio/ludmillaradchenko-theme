@@ -1,0 +1,110 @@
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  .lrcalc{ --red:#D81E26; --ink:#0E0E0E; --line:#E6E3DE; --muted:#9a9690; }
+  .lrcalc *{ box-sizing:border-box; }
+  .lrcalc{ font-family:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    color:var(--ink); max-width:440px; margin:40px auto; padding:0 18px; }
+  .lrcalc .kick{ font-size:11px; letter-spacing:.42em; text-transform:uppercase; color:var(--red);
+    font-weight:600; text-align:center; }
+  .lrcalc h1{ font-family:'Cormorant Garamond',serif; font-weight:600; font-size:38px; line-height:1.05;
+    text-align:center; margin:10px 0 6px; letter-spacing:.005em; }
+  .lrcalc .sub{ text-align:center; font-size:13px; color:var(--muted); margin-bottom:26px; font-weight:400; }
+  .lrcalc .rule{ width:34px; height:2px; background:var(--red); margin:14px auto 0; }
+  .lrcalc .lbl{ font-size:10.5px; letter-spacing:.26em; text-transform:uppercase; color:var(--muted);
+    font-weight:600; margin:24px 0 11px; text-align:center; }
+  .lrcalc .std{ display:flex; flex-direction:column; gap:9px; }
+  .lrcalc .std button{ display:flex; justify-content:space-between; align-items:center;
+    background:#fff; border:1px solid var(--line); color:var(--ink);
+    padding:15px 18px; cursor:pointer; transition:.18s; width:100%; }
+  .lrcalc .std button .s{ font-size:15px; font-weight:500; letter-spacing:.02em; }
+  .lrcalc .std button .p{ font-family:'Cormorant Garamond',serif; font-size:21px; font-weight:600; color:var(--red); }
+  .lrcalc .std button:hover{ border-color:var(--ink); }
+  .lrcalc .std button.on{ background:var(--ink); border-color:var(--ink); color:#fff; }
+  .lrcalc .std button.on .p{ color:#fff; }
+  .lrcalc .custom{ margin-top:10px; }
+  .lrcalc .inputs{ display:flex; gap:14px; align-items:flex-end; justify-content:center; }
+  .lrcalc .field{ flex:1; max-width:150px; }
+  .lrcalc .field label{ display:block; font-size:10px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; margin-bottom:8px; text-align:center; }
+  .lrcalc .field input{ width:100%; border:none; border-bottom:1.5px solid var(--ink); color:var(--ink);
+    font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:600; padding:6px 4px 8px;
+    text-align:center; background:transparent; }
+  .lrcalc .field input:focus{ outline:none; border-color:var(--red); }
+  .lrcalc .times{ padding-bottom:12px; color:var(--muted); font-family:'Cormorant Garamond',serif; font-size:24px; }
+  .lrcalc .opt{ display:flex; align-items:center; gap:10px; justify-content:center; margin-top:24px;
+    font-size:13px; color:var(--ink); cursor:pointer; font-weight:500; }
+  .lrcalc .opt input{ width:16px; height:16px; accent-color:var(--red); }
+  .lrcalc .opt .pl{ color:var(--red); font-weight:600; }
+  .lrcalc .result{ margin-top:28px; border-top:1px solid var(--line); padding-top:26px; text-align:center; }
+  .lrcalc .eur{ font-family:'Cormorant Garamond',serif; font-size:54px; font-weight:600; line-height:1; letter-spacing:.01em; }
+  .lrcalc .break{ margin-top:18px; font-size:11.5px; color:var(--muted); line-height:1.9; font-weight:500; letter-spacing:.02em; }
+  .lrcalc .break b{ color:var(--ink); font-weight:600; }
+  .lrcalc .note{ margin-top:18px; line-height:1.6; color:var(--muted); font-style:italic;
+    font-family:'Cormorant Garamond',serif; font-size:14px; }
+  .lrcalc .foot{ margin-top:28px; text-align:center; font-size:10px; letter-spacing:.32em;
+    text-transform:uppercase; color:#c7c4bf; font-weight:600; }
+</style>
+
+<div class="lrcalc">
+  <div class="kick">FullArt Multiple · Limited Edition</div>
+  <h1>Calcola la tua opera</h1>
+  <div class="sub">Scegli una misura standard, o inserisci la tua</div>
+  <div class="rule"></div>
+
+  <div class="lbl">Misure standard</div>
+  <div class="std" id="lrstd">
+    <button type="button" data-w="100" data-h="100"><span class="s">1 × 1 m</span> <span class="p">€ 750</span></button>
+    <button type="button" data-w="150" data-h="150"><span class="s">1,5 × 1,5 m</span> <span class="p">€ 1.690</span></button>
+    <button type="button" data-w="200" data-h="200"><span class="s">2 × 2 m</span> <span class="p">€ 3.000</span></button>
+  </div>
+
+  <div class="custom">
+    <div class="lbl">Oppure la tua misura · qualsiasi rettangolo</div>
+    <div class="inputs">
+      <div class="field"><label>Larghezza · cm</label><input id="lrw" type="number" inputmode="decimal" value="100" min="1"></div>
+      <div class="times">×</div>
+      <div class="field"><label>Altezza · cm</label><input id="lrh" type="number" inputmode="decimal" value="100" min="1"></div>
+    </div>
+  </div>
+
+  <label class="opt"><input type="checkbox" id="lrframe"> Aggiungi cornice <span class="pl">+ € 50</span></label>
+
+  <div class="result">
+    <div class="eur" id="lreur">€ 750</div>
+    <div class="break" id="lrbreak"></div>
+    <div class="note">Il prezzo base è solo per la stampa fine-art. Supporto rigido in Dibond e cornice non inclusi, disponibili su richiesta.</div>
+  </div>
+
+  <div class="foot">Ludmilla Radchenko · Art to Wear</div>
+</div>
+
+<script>
+(function(){
+  var PER_M2 = 750, FRAME_EUR = 50;
+  function round10(x){ return Math.round(x/10)*10; }
+  function fmt(n){ return n.toLocaleString('it-IT'); }
+  function calc(){
+    var w = parseFloat(document.getElementById('lrw').value)||0;
+    var h = parseFloat(document.getElementById('lrh').value)||0;
+    var m2 = (w*h)/10000;
+    var frame = document.getElementById('lrframe').checked;
+    var total = round10(m2 * PER_M2 + (frame ? FRAME_EUR : 0));
+    document.getElementById('lreur').textContent = '€ ' + fmt(total);
+    document.getElementById('lrbreak').innerHTML =
+      'Misura <b>' + (w/100).toFixed(2).replace('.00','').replace('.',',') + ' × ' + (h/100).toFixed(2).replace('.00','').replace('.',',') + ' m</b> &nbsp;·&nbsp; <b>' + m2.toFixed(2).replace('.',',') + ' m²</b> &nbsp;·&nbsp; € ' + PER_M2 + '/m²' +
+      (frame ? ' &nbsp;·&nbsp; Cornice <b>€ 50</b>' : '');
+  }
+  function clearStd(){ document.querySelectorAll('#lrstd button').forEach(function(b){ b.classList.remove('on'); }); }
+  document.querySelectorAll('#lrstd button').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.getElementById('lrw').value = b.getAttribute('data-w');
+      document.getElementById('lrh').value = b.getAttribute('data-h');
+      clearStd(); b.classList.add('on'); calc();
+    });
+  });
+  document.getElementById('lrw').addEventListener('input', function(){ clearStd(); calc(); });
+  document.getElementById('lrh').addEventListener('input', function(){ clearStd(); calc(); });
+  document.getElementById('lrframe').addEventListener('change', calc);
+  calc();
+})();
+</script>
