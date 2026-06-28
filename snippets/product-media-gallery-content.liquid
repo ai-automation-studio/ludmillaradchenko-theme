@@ -392,8 +392,12 @@
             --media-preview-ratio: {{ media.preview_image.aspect_ratio | default: 1.0 }};
           {% endcapture %}
         {% endif %}
+        {% assign next_slide_index = forloop.index0 | plus: 1 %}
+        {% if forloop.last %}{% assign next_slide_index = 0 %}{% endif %}
         {% if block_settings.zoom and media.media_type == 'model' %}
           {%- capture attributes -%}"{% if settings.transition_to_main_product and forloop.first %} data-view-transition-type="product-image-transition"{% endif %}{% endcapture -%}
+        {% elsif media.media_type == 'image' %}
+          {%- capture attributes -%}on:click="/select/{{ next_slide_index }}"{% if settings.transition_to_main_product and forloop.first %} data-view-transition-type="product-image-transition"{% endif %}{% endcapture -%}
         {% elsif block_settings.zoom %}
           {%- capture attributes -%}on:click="#zoom-dialog-{{ block_id }}/open/{{ forloop.index0 }}"{% if settings.transition_to_main_product and forloop.first %} data-view-transition-type="product-image-transition"{% endif %}{% endcapture -%}
         {% endif %}
