@@ -21,8 +21,6 @@
     src="{{ 'zoom-dialog.js' | asset_url }}"
     type="module"
   ></script>
-  <script src="{{ 'elevate-zoom-window.js' | asset_url }}" defer></script>
-  <script src="{{ 'product-zoom-init.js' | asset_url }}" defer></script>
 {%- endif -%}
 {%- liquid
   assign selected_product = closest.product
@@ -319,16 +317,9 @@
     {{ view_transition_styles_cover }}
   {% endif %}
 
-  {% if block_settings.zoom %}
-    /* Elevate zoom (window) – desktop only, PrestaShop-style */
-    @media screen and (max-width: 991px) {
-      .zoomContainer { display: none !important; }
-    }
-    @media screen and (min-width: 992px) {
-      .zoomContainer { z-index: 9; }
-      .zoomWindow { background-color: #fff; }
-    }
-  {% endif %}
+  /* Elevate-zoom hover lens removed: it overlaid the image and blocked
+     click-to-advance + arrows. Fullscreen zoom dialog kept. */
+  .zoomContainer, .zoomWindowContainer, .zoomLens { display: none !important; }
 
   :root { --gallery-media-border-radius: {{ block_settings.media_radius }}px; }
 {% endstyle %}
@@ -785,7 +776,7 @@
   }
 
   .product-media-container--zoomable.product-media-container--image {
-    cursor: zoom-in;
+    cursor: pointer;
   }
 
   .dialog-zoomed-gallery .product-media-container--video deferred-media,
