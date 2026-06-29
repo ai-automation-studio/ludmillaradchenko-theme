@@ -21,8 +21,6 @@
     src="{{ 'zoom-dialog.js' | asset_url }}"
     type="module"
   ></script>
-  <script src="{{ 'elevate-zoom-window.js' | asset_url }}" defer></script>
-  <script src="{{ 'product-zoom-init.js' | asset_url }}" defer></script>
 {%- endif -%}
 {%- liquid
   assign selected_product = closest.product
@@ -785,7 +783,7 @@
   }
 
   .product-media-container--zoomable.product-media-container--image {
-    cursor: zoom-in;
+    cursor: pointer;
   }
 
   .dialog-zoomed-gallery .product-media-container--video deferred-media,
@@ -874,4 +872,6 @@
       opacity: 0;
     }
   }
+  /* Elevate-zoom hover lens removed */
+  .zoomContainer, .zoomWindowContainer, .zoomLens { display: none !important; }
 {% endstylesheet %}
